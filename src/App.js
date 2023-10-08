@@ -1,13 +1,22 @@
 import "./App.css";
-import Sponser from "./components/Sponser";
+import Sponsor from "./components/Sponsor";
 import Navbar from "./components/Navbar";
-import ImageSlider from "./components/Tracks";
+import Landing from "./components/Landing";
+import About from "./components/About";
+import ImageSlider from "./components/ImageSlider";
 import Schedule from "./components/Schedule";
+import Prizes from "./components/Prizes";
+import Tracks from "./components/Tracks";
+
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <Sponser />
+      <Landing />
+      <About />
+      <Tracks/>
+      <Prizes />
+      <Sponsor />
       <ImageSlider />
       <Schedule />
     </div>

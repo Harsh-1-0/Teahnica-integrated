@@ -1,91 +1,41 @@
-import images from "./images";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import TrackCard from './TrackCard'; // Assuming the TrackCard component file name is TrackCard.js
+import Rover from "../imageForWebsite/rover.png"; 
 
-function ImageSlider() {
-  const [slideIndex, setSlideIndex] = useState(0);
+const Tracks = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
   useEffect(() => {
-    // Automatically move to the next slide every 3 seconds (adjust as needed)
-    const interval = setInterval(() => {
-      setSlideIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000);
+    window.addEventListener('resize', handleResize);
 
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(interval);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  const prevSlide = () => {
-    setSlideIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
-
-  const nextSlide = () => {
-    setSlideIndex(
-      (prevIndex) => (prevIndex + 1 + images.length) % images.length
-    );
-  };
   return (
-    <div className="flex flex-col items-center justify-center h-screen relative min-h-screen bg-cover bg-center bg">
-      <p className="text-center mb-8">
-        <span className="heading heading1">ENGA</span>
-        <span className="heading heading2">GEMENTS</span>
-      </p>
-      <div className="caro slider w-64 h-48 max-md:w-48 max-md:h-60 relative overflow-hidden">
-        {images.map((event, index) => (
-          <img
-            key={index}
-            src={event.post}
-            alt={`Post${index + 1}`}
-            // Rendering of the image using opacity
-            className={`object-cover rounded-3xl absolute top-0 left-0 w-full h-full transition-opacity duration-500 p-4  ${
-              index === slideIndex ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-      </div>
-      <div className="m-6">
-        <div>
-          {images.map(
-            (event, index) =>
-              // Conditional rendering to display event.name only when its image is active
-              index === slideIndex && (
-                <h1 className="text-white caption" key={index}>
-                  {event.name}
-                </h1>
-              )
-          )}
+    <div className="relative h-screen mb-8">
+      <div className="relative inset-0 flex flex-col items-left justify-left">
+        <img src={Rover} alt="Rover" style={{ width: "30%", height: "30%" }} />
         </div>
-        <div>
-          <p className="text-white small-caption">12:00PM - 01:00PM</p>
-        </div>
-      </div>
-      <div className="flex flex-wrap gap-14">
-        <button
-          className="px-8 md:px-16 py-2 text-black bg-blue-100 border-blue-500 border-b-4 hover:border-b-2 hover:border-t-2 border-blue-dark hover:border-blue rounded "
-          onClick={prevSlide}
-        >
-          <div
-            class="w-0 h-0 
-            border-t-[0.4rem] border-t-transparent
-            border-r-[0.6rem] border-r-blue-500
-            border-b-[0.4rem] border-b-transparent"
-          ></div>
-        </button>
-
-        <button
-          className="px-8 md:px-16 py-2 text-black bg-blue-100 border-blue-500 border-b-4 hover:border-b-2 hover:border-t-2 border-blue-dark hover:border-blue rounded "
-          onClick={nextSlide}
-        >
-          <div
-            class="w-0 h-0 
-            border-t-[0.4rem] border-t-transparent
-            border-l-[0.6rem] border-l-blue-500
-            border-b-[0.4rem] border-b-transparent"
-          ></div>
-        </button>
+      <div
+        className={`absolute ${
+          isMobile
+            ? 'top-[22%] right-[40%] w-1 h-1/4'
+            : 'top-[15%] left-2/3 h-1/2 md:top-[13%] md:left-3/4 md:transform md:-translate-x-1/2 md:h-1/4 lg:left-[80%] lg:h-1/8 lg:top:[10%'
+        } flex flex-col gap-0 md:gap-4 lg:gap-0`}
+      >
+        <TrackCard title="TRACK 01" icon="/images/scholar.png" positionRight={true} />
+        <TrackCard title="TRACK 02" icon="/images/medical.png" positionRight={false} />
+        <TrackCard title="TRACK 03" icon="/images/education.png" positionRight={true} />
+        <TrackCard title="TRACK 04" icon="/images/currency.png" positionRight={false} />
       </div>
     </div>
   );
-}
+};
 
-export default ImageSlider;
+export default Tracks;
